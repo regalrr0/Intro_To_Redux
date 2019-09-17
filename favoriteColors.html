@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Favorite Colors</title>
+		<script src="https://unpkg.com/redux@latest/dist/redux.js"></script>
+	</head>
+
+	<body>
+		<script>
+			// action creators
+			// create actions based on "type"
+			// can send any other information along with it
+
+			function addColor(value) {
+				return {
+					type: "ADD",
+					color: value
+				};
+			}
+
+			function removeColor(value) {
+				return {
+					type: "REMOVE",
+					color: value
+				};
+			}
+
+			// reducer
+			// grabs current state, inspect action type and properties, and set new state
+			// Should NOT do any mututating or altering. Just pure calculation
+			function favoriteColors (state, action) {
+				if (state === undefined) {
+					state = [];
+				}
+
+				if (action.type === "ADD") 
+				{
+					return state.concat(action.color)
+				}
+				else if (action.type === "REMOVE")
+				{
+					return state.filter(
+						function (item) {
+							return item !== action.color;
+					});
+				}
+				else
+				{
+					return state;
+				}
+			}
+
+			// store
+			var store = Redux.createStore(favoriteColors);
+			store.subscribe(render);
+
+			function render(){
+				console.log(store.getState());
+			}
+			// test data
+			// each dispatch call sends action to reducer, which does the appropriate work
+			store.dispatch(addColor("blue"));
+			store.dispatch(addColor("yellow"));
+			store.dispatch(addColor("green"));
+			store.dispatch(addColor("red"));
+			store.dispatch(addColor("gray"));
+			store.dispatch(addColor("orange"));
+			store.dispatch(removeColor("gray"));
+		</script>
+	  </body>
+</html>
+
