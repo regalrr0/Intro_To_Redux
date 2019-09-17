@@ -51,12 +51,15 @@
 			}
 
 			// store
+			// the current state of our application
 			var store = Redux.createStore(favoriteColors);
+			
+			// can subscribe it to some function to do an action when it is updated
 			store.subscribe(render);
-
 			function render(){
 				console.log(store.getState());
 			}
+
 			// test data
 			// each dispatch call sends action to reducer, which does the appropriate work
 			store.dispatch(addColor("blue"));
